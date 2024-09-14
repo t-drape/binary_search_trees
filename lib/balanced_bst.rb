@@ -12,7 +12,6 @@ class Tree
   def build_tree(arr)
     # Sort the array and Remove duplicates
     sorted_unique_array = arr.uniq.sort
-    p sorted_unique_array
 
     n = sorted_unique_array.length - 1
     sorted_arr_to_bst(sorted_unique_array, 0, n)
@@ -34,6 +33,41 @@ class Tree
     root
   end
 
+  def left_case(value, node)
+    current_node = node.left_val
+    # If no left node exists, we are at the end of the balanced BST, set left value equal to new node
+    if current_node.nil?
+      new_node = BstNode.new(value)
+      node.left_val = new_node
+    else
+      insert(value, current_node)
+    end
+  end
+
+  def right_case(value, node)
+    current_node = node.right_val
+    # If no right node exists, we are at the end of the balanced BST, set right value equal to new node
+    if current_node.nil?
+      new_node = BstNode.new(value)
+      node.right_val = new_node
+    else
+      insert(value, current_node)
+    end
+  end
+
+  def insert(value, node = @root)
+    # Check if value in BST, return nil if present
+    return nil if value == node.value
+
+    # For value less than node value, use left half of array
+    if value < node.value
+      left_case(value, node)
+    # For value greater than node value, use right half of array
+    elsif value > node.value
+      right_case(value, node)
+    end
+  end
+
   def pretty_print(node = @root, prefix = '', is_left_val = true)
     pretty_print(node.right_val, "#{prefix}#{is_left_val ? '│   ' : '    '}", false) if node.right_val
     puts "#{prefix}#{is_left_val ? '└── ' : '┌── '}#{node.value}"
@@ -43,4 +77,5 @@ end
 
 x = Tree.new([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324])
 
+x.insert(100)
 x.pretty_print
