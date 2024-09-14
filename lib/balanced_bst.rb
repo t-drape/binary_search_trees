@@ -68,6 +68,37 @@ class Tree
     end
   end
 
+  def delete(value, node = @root)
+    puts value
+  end
+
+  def find(value, node = @root)
+    return nil if node.nil?
+
+    return node if value == node.value
+
+    if value < node.value
+      find(value, node.left_val)
+    elsif value > node.value
+      find(value, node.right_val)
+    end
+  end
+
+  def level_order
+    # Keep array as queue, FIFO: First In First Out
+    queue = [@root]
+    # Traverse the tree in breadth first order
+    # Add Current Node
+    until queue.empty?
+      current_node = queue.shift
+      # Add left child
+      queue << current_node.left_val unless current_node.left_val.nil?
+      # Add right child
+      queue << current_node.right_val unless current_node.right_val.nil?
+      yield(current_node)
+    end
+  end
+
   def pretty_print(node = @root, prefix = '', is_left_val = true)
     pretty_print(node.right_val, "#{prefix}#{is_left_val ? '│   ' : '    '}", false) if node.right_val
     puts "#{prefix}#{is_left_val ? '└── ' : '┌── '}#{node.value}"
@@ -77,5 +108,8 @@ end
 
 x = Tree.new([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324])
 
-x.insert(100)
+puts x.find(8)
+x.pretty_print
+
+x.level_order { |node| node.val += 1 }
 x.pretty_print

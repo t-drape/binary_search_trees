@@ -4,7 +4,7 @@
 
 # A class to model a node in the Binary Search Tree data structure
 class BstNode
-  attr_accessor :left_val, :right_val
+  attr_accessor :val, :left_val, :right_val
 
   def initialize(val, left_val = nil, right_val = nil)
     @val = val
