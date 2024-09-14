@@ -99,6 +99,11 @@ class Tree
     end
   end
 
+  def height(node)
+    height = 0
+    # For each new node, increase height by 1
+  end
+
   def pretty_print(node = @root, prefix = '', is_left_val = true)
     pretty_print(node.right_val, "#{prefix}#{is_left_val ? '│   ' : '    '}", false) if node.right_val
     puts "#{prefix}#{is_left_val ? '└── ' : '┌── '}#{node.value}"
