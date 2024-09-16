@@ -114,19 +114,13 @@ class Tree
     preorder(node.right_val)
   end
 
-  def inorder(&block)
+  def inorder(node)
     # Inorder Traversal: Left node, Root node, Right node
-    root = @root
+    return nil if node.nil?
 
-    queue = [root.right_val, root.val, root.left_val]
-
-    arr = []
-
-    if block_given?
-      arr.each(&block)
-    else
-      arr
-    end
+    inorder(node.left_val)
+    puts node.value
+    inorder(node.right_val)
   end
 
   def height(comparable_node)
@@ -157,4 +151,4 @@ x.pretty_print
 
 y = x.find(8)
 
-x.preorder(y)
+x.inorder(y)
