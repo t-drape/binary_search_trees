@@ -109,7 +109,7 @@ class Tree
     # Preorder Traversal: Root node, Left node, Right node
     return nil if node.nil?
 
-    puts node.value
+    puts node.val
     preorder(node.left_val)
     preorder(node.right_val)
   end
@@ -119,8 +119,17 @@ class Tree
     return nil if node.nil?
 
     inorder(node.left_val)
-    puts node.value
+    puts node.val
     inorder(node.right_val)
+  end
+
+  def postorder(node)
+    # Postorder Traversal: Left node, Right node, Root node
+    return nil if node.nil?
+
+    postorder(node.left_val)
+    postorder(node.right_val)
+    puts node.val
   end
 
   def height(comparable_node)
