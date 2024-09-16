@@ -104,6 +104,17 @@ class Tree
     # For each new node, increase height by 1
   end
 
+  def depth(node)
+    node_depth = 1
+    compare_node = @root
+    while node != compare_node
+      node_depth += 1
+      compare_node = node.value > compare_node.value ? compare_node.right_val : compare_node.left_val
+      return nil if compare_node.nil?
+    end
+    node_depth
+  end
+
   def pretty_print(node = @root, prefix = '', is_left_val = true)
     pretty_print(node.right_val, "#{prefix}#{is_left_val ? '│   ' : '    '}", false) if node.right_val
     puts "#{prefix}#{is_left_val ? '└── ' : '┌── '}#{node.value}"
@@ -113,8 +124,10 @@ end
 
 x = Tree.new([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324])
 
-puts x.find(8)
 x.pretty_print
 
-x.level_order { |node| node.val += 1 }
-x.pretty_print
+z = x.find(0)
+
+puts z
+
+p x.depth(z)
