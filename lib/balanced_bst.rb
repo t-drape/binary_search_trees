@@ -85,6 +85,7 @@ class Tree
   end
 
   def level_order
+    arr = []
     # Keep array as queue, FIFO: First In First Out
     queue = [@root]
     # Traverse the tree in breadth first order
@@ -95,13 +96,20 @@ class Tree
       queue << current_node.left_val unless current_node.left_val.nil?
       # Add right child
       queue << current_node.right_val unless current_node.right_val.nil?
-      yield(current_node)
+      if block_given?
+        yield(current_node)
+      else
+        arr << current_node.value
+      end
     end
+    arr unless block_given?
   end
 
-  def height(node)
-    height = 0
-    # For each new node, increase height by 1
+  def inorder
+  end
+
+  def height(comparable_node)
+    height = 1
   end
 
   def depth(node)
@@ -125,9 +133,3 @@ end
 x = Tree.new([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324])
 
 x.pretty_print
-
-z = x.find(0)
-
-puts z
-
-p x.depth(z)
