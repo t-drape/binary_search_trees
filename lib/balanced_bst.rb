@@ -105,7 +105,28 @@ class Tree
     arr unless block_given?
   end
 
-  def inorder
+  def preorder(node)
+    # Preorder Traversal: Root node, Left node, Right node
+    return nil if node.nil?
+
+    puts node.value
+    preorder(node.left_val)
+    preorder(node.right_val)
+  end
+
+  def inorder(&block)
+    # Inorder Traversal: Left node, Root node, Right node
+    root = @root
+
+    queue = [root.right_val, root.val, root.left_val]
+
+    arr = []
+
+    if block_given?
+      arr.each(&block)
+    else
+      arr
+    end
   end
 
   def height(comparable_node)
@@ -133,3 +154,7 @@ end
 x = Tree.new([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324])
 
 x.pretty_print
+
+y = x.find(8)
+
+x.preorder(y)
