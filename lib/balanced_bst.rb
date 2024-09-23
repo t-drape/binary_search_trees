@@ -106,17 +106,29 @@ class Tree
   end
 
   def preorder(node)
-    # Preorder Traversal: Root node, Left node, Right node
-    return nil if node.nil?
+    current_node = @root
+    right_node = @root.right_val
+    right_nodes = []
+    values = []
 
-    puts node.val
-    preorder(node.left_val)
-    preorder(node.right_val)
+    until current_node.nil? && right_nodes.empty?
+      right_nodes << right_node unless right_node.nil?
+      values << current_node.val
+      p current_node.val
+      current_node = current_node.left_val.nil? ? right_nodes.pop : current_node.left_val
+      right_node = current_node.right_val unless current_node.nil?
+    end
   end
 
   def inorder(node)
     # Inorder Traversal: Left node, Root node, Right node
     return nil if node.nil?
+
+    values = []
+
+    node = node.left_val until node.left_val.nil?
+
+    values << node.val
 
     inorder(node.left_val)
     puts node.val
@@ -160,4 +172,4 @@ x.pretty_print
 
 y = x.find(8)
 
-x.inorder(y)
+x.preorder(y)
