@@ -105,7 +105,7 @@ class Tree
     arr unless block_given?
   end
 
-  def preorder(node)
+  def preorder
     current_node = @root
     right_node = @root.right_val
     right_nodes = []
@@ -113,11 +113,11 @@ class Tree
 
     until current_node.nil? && right_nodes.empty?
       right_nodes << right_node unless right_node.nil?
-      values << current_node.val
-      p current_node.val
+      block_given? ? yield(current_node.val) : values << current_node.val
       current_node = current_node.left_val.nil? ? right_nodes.pop : current_node.left_val
       right_node = current_node.right_val unless current_node.nil?
     end
+    block_given? ? nil : values
   end
 
   def inorder(node)
@@ -172,4 +172,4 @@ x.pretty_print
 
 y = x.find(8)
 
-x.preorder(y)
+x.preorder { |e| puts e }
