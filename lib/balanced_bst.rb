@@ -125,17 +125,19 @@ class Tree
     # Inorder Traversal: Left node, Root node, Right node
 
     current_node = @root
-    right_node = @root.right_val
     right_nodes = []
     roots = []
     values = []
 
-    until current_node.nil? && roots.empty?
-      roots << current_node
+    until current_node.nil?
+      roots << current_node.val
+      right_nodes << current_node.right_val.val
       p current_node.val
-      current_node = current_node.left_val.nil? ? roots.pop : current_node.left_val
+      current_node = current_node.left_val
+      # .nil? ? roots.pop : current_node.left_val
     end
     p roots
+    p right_nodes
     block_given? ? nil : values
 
     # return nil if node.nil?
@@ -147,11 +149,40 @@ class Tree
 
   def postorder(node)
     # Postorder Traversal: Left node, Right node, Root node
-    return nil if node.nil?
 
-    postorder(node.left_val)
-    postorder(node.right_val)
-    puts node.val
+    current_node = @root
+    right_node = @root.right_val
+    left_node = @root.left_val
+    root_nodes = []
+    right_nodes = []
+    left_nodes = []
+    values = []
+
+    until current_node.left_val.nil?
+      left_node = current_node.left_val
+      right_node = current_node.right_val
+      root_nodes << current_node.val
+
+      left_nodes << left_node.val unless left_node.nil?
+      right_nodes << right_node.val unless right_node.nil?
+      current_node = current_node.left_val
+    end
+    right_nodes
+
+    # until current_node.nil? && right_nodes.empty?
+
+    #   right_nodes << right_node unless right_node.nil?
+    #   block_given? ? yield(current_node.val) : values << current_node.val
+    #   current_node = current_node.left_val.nil? ? right_nodes.pop : current_node.left_val
+    #   right_node = current_node.right_val unless current_node.nil?
+    # end
+    # block_given? ? nil : values
+
+    # return nil if node.nil?
+
+    # postorder(node.left_val)
+    # postorder(node.right_val)
+    # puts node.val
   end
 
   def height(comparable_node)
@@ -182,4 +213,4 @@ x.pretty_print
 
 y = x.find(8)
 
-x.inorder(y)
+p x.postorder(y)
