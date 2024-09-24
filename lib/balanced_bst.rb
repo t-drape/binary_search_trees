@@ -121,18 +121,7 @@ class Tree
     block_given? ? nil : values
   end
 
-  def inorder(node)
-    # Inorder Traversal: Left node, Root node, Right node
-
-    current_node = @root
-    roots = []
-    values = []
-
-    # Base case: go left
-    # If left value is nil, go root
-    # If right node, after all, go right
-
-    # Update node until left pointer is nil, then add value of current node
+  def reduce_left_values(current_node, roots, values)
     until current_node.left_val.nil?
       # Each time, the value updates, keep old values in roots queue
       roots << current_node
@@ -142,11 +131,22 @@ class Tree
     # Now, the current node is the lowest value in BST
     # Add value to value array
     values << current_node.val
+
     if current_node.right_val.nil?
       current_node = roots.pop
       values << current_node.val
     end
     current_node = current_node.right_val
+  end
+
+  def inorder(node)
+    # Inorder Traversal: Left node, Root node, Right node
+
+    current_node = @root
+    roots = []
+    right_node = current_node.right_val
+    right_nodes = []
+    values = []
 
     until current_node.left_val.nil?
       # Each time, the value updates, keep old values in roots queue
@@ -154,6 +154,8 @@ class Tree
       # Base case: go left
       current_node = current_node.left_val
     end
+    # Now, the current node is the lowest value in BST
+    # Add value to value array
     values << current_node.val
 
     if current_node.right_val.nil?
@@ -161,13 +163,14 @@ class Tree
       values << current_node.val
     end
     current_node = current_node.right_val
-
     until current_node.left_val.nil?
       # Each time, the value updates, keep old values in roots queue
       roots << current_node
       # Base case: go left
       current_node = current_node.left_val
     end
+    # Now, the current node is the lowest value in BST
+    # Add value to value array
     values << current_node.val
 
     if current_node.right_val.nil?
@@ -175,13 +178,14 @@ class Tree
       values << current_node.val
     end
     current_node = current_node.right_val
-
     until current_node.left_val.nil?
       # Each time, the value updates, keep old values in roots queue
       roots << current_node
       # Base case: go left
       current_node = current_node.left_val
     end
+    # Now, the current node is the lowest value in BST
+    # Add value to value array
     values << current_node.val
 
     if current_node.right_val.nil?
@@ -189,13 +193,14 @@ class Tree
       values << current_node.val
     end
     current_node = current_node.right_val
-
     until current_node.left_val.nil?
       # Each time, the value updates, keep old values in roots queue
       roots << current_node
       # Base case: go left
       current_node = current_node.left_val
     end
+    # Now, the current node is the lowest value in BST
+    # Add value to value array
     values << current_node.val
 
     if current_node.right_val.nil?
@@ -203,13 +208,14 @@ class Tree
       values << current_node.val
     end
     current_node = current_node.right_val
-
     until current_node.left_val.nil?
       # Each time, the value updates, keep old values in roots queue
       roots << current_node
       # Base case: go left
       current_node = current_node.left_val
     end
+    # Now, the current node is the lowest value in BST
+    # Add value to value array
     values << current_node.val
 
     if current_node.right_val.nil?
@@ -217,13 +223,14 @@ class Tree
       values << current_node.val
     end
     current_node = current_node.right_val
-
     until current_node.left_val.nil?
       # Each time, the value updates, keep old values in roots queue
       roots << current_node
       # Base case: go left
       current_node = current_node.left_val
     end
+    # Now, the current node is the lowest value in BST
+    # Add value to value array
     values << current_node.val
 
     if current_node.right_val.nil?
@@ -231,14 +238,28 @@ class Tree
       values << current_node.val
     end
     current_node = current_node.right_val
-
     until current_node.left_val.nil?
       # Each time, the value updates, keep old values in roots queue
       roots << current_node
       # Base case: go left
       current_node = current_node.left_val
     end
+    # Now, the current node is the lowest value in BST
+    # Add value to value array
     values << current_node.val
+
+    if current_node.right_val.nil?
+      current_node = roots.pop
+      values << current_node.val
+    end
+    current_node = current_node.right_val
+    values << current_node.val
+    # Base case: go left
+    # If left value is nil, go root
+    # If right node, after all, go right
+
+    # Update node until left pointer is nil, then add value of current node
+
     # values << current_node.val
     # until roots.empty? && current_node.right_val.nil?
     #   current_node = current_node.right_val.nil? ? roots.pop : current_node.right_val
