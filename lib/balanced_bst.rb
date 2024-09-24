@@ -125,20 +125,130 @@ class Tree
     # Inorder Traversal: Left node, Root node, Right node
 
     current_node = @root
-    right_nodes = []
     roots = []
     values = []
 
-    until current_node.nil?
-      roots << current_node.val
-      right_nodes << current_node.right_val.val
-      p current_node.val
+    # Base case: go left
+    # If left value is nil, go root
+    # If right node, after all, go right
+
+    # Update node until left pointer is nil, then add value of current node
+    until current_node.left_val.nil?
+      # Each time, the value updates, keep old values in roots queue
+      roots << current_node
+      # Base case: go left
       current_node = current_node.left_val
-      # .nil? ? roots.pop : current_node.left_val
     end
-    p roots
-    p right_nodes
-    block_given? ? nil : values
+    # Now, the current node is the lowest value in BST
+    # Add value to value array
+    values << current_node.val
+    if current_node.right_val.nil?
+      current_node = roots.pop
+      values << current_node.val
+    end
+    current_node = current_node.right_val
+
+    until current_node.left_val.nil?
+      # Each time, the value updates, keep old values in roots queue
+      roots << current_node
+      # Base case: go left
+      current_node = current_node.left_val
+    end
+    values << current_node.val
+
+    if current_node.right_val.nil?
+      current_node = roots.pop
+      values << current_node.val
+    end
+    current_node = current_node.right_val
+
+    until current_node.left_val.nil?
+      # Each time, the value updates, keep old values in roots queue
+      roots << current_node
+      # Base case: go left
+      current_node = current_node.left_val
+    end
+    values << current_node.val
+
+    if current_node.right_val.nil?
+      current_node = roots.pop
+      values << current_node.val
+    end
+    current_node = current_node.right_val
+
+    until current_node.left_val.nil?
+      # Each time, the value updates, keep old values in roots queue
+      roots << current_node
+      # Base case: go left
+      current_node = current_node.left_val
+    end
+    values << current_node.val
+
+    if current_node.right_val.nil?
+      current_node = roots.pop
+      values << current_node.val
+    end
+    current_node = current_node.right_val
+
+    until current_node.left_val.nil?
+      # Each time, the value updates, keep old values in roots queue
+      roots << current_node
+      # Base case: go left
+      current_node = current_node.left_val
+    end
+    values << current_node.val
+
+    if current_node.right_val.nil?
+      current_node = roots.pop
+      values << current_node.val
+    end
+    current_node = current_node.right_val
+
+    until current_node.left_val.nil?
+      # Each time, the value updates, keep old values in roots queue
+      roots << current_node
+      # Base case: go left
+      current_node = current_node.left_val
+    end
+    values << current_node.val
+
+    if current_node.right_val.nil?
+      current_node = roots.pop
+      values << current_node.val
+    end
+    current_node = current_node.right_val
+
+    until current_node.left_val.nil?
+      # Each time, the value updates, keep old values in roots queue
+      roots << current_node
+      # Base case: go left
+      current_node = current_node.left_val
+    end
+    values << current_node.val
+
+    if current_node.right_val.nil?
+      current_node = roots.pop
+      values << current_node.val
+    end
+    current_node = current_node.right_val
+
+    until current_node.left_val.nil?
+      # Each time, the value updates, keep old values in roots queue
+      roots << current_node
+      # Base case: go left
+      current_node = current_node.left_val
+    end
+    values << current_node.val
+    # values << current_node.val
+    # until roots.empty? && current_node.right_val.nil?
+    #   current_node = current_node.right_val.nil? ? roots.pop : current_node.right_val
+    #   values << current_node.val
+    # end
+    # current_node = current_node.right_val.nil? ? roots.pop : current_node.right_val
+    # values << current_node.val
+    # current_node = current_node.right_val.nil? ? roots.pop : current_node.right_val
+    # values << current_node.val
+    values
 
     # return nil if node.nil?
 
@@ -213,4 +323,4 @@ x.pretty_print
 
 y = x.find(8)
 
-p x.postorder(y)
+p x.inorder(y)
