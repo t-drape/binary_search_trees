@@ -152,99 +152,28 @@ class Tree
     # 3, 1, 7, 5, 4, 23, 9, 6345, 324, 67, 8
 
     current_node = @root
-    roots = []
-    right_nodes = []
-    left_nodes = []
     values = []
+    no_left_movement_nodes = []
+    left_movement_allowed_nodes = []
 
-    until current_node.left_val.nil?
-      roots << current_node.val
-      current_node = current_node.left_val
+    no_left_movement_nodes << current_node
+    left_movement_allowed_nodes << current_node.right_val
+    until no_left_movement_nodes.empty? && left_movement_allowed_nodes.nil?
+      if current_node.left_val.nil? && current_node.right_val.nil?
+        p values
+        values << current_node.val
+        # Pop from arr 2
+        current_node = left_movement_allowed_nodes.empty? ? no_left_movement_nodes.pop : left_movement_allowed_nodes.pop
+      else
+        current_node = current_node.left_val
+      end
+      if current_node.nil?
+        current_node = left_movement_allowed_nodes.empty? ? no_left_movement_nodes.pop : left_movement_allowed_nodes.pop
+      else
+        no_left_movement_nodes << current_node
+        left_movement_allowed_nodes << current_node.right_val unless current_node.right_val.nil?
+      end
     end
-    p values
-    current_node = roots.pop if current_node.right_val.nil?
-    current_node = current_node.right_val.nil? ? roots.pop : current_node.right_val
-    until current_node.left_val.nil?
-      roots << current_node.val
-      current_node = current_node.left_val
-    end
-    values << current_node.val
-
-    # until current_node.left_val.nil? && current_node.right_val.nil?
-    #   roots << current_node
-    #   current_node = current_node.left_val.nil? ? current_node.right_val : current_node.left_val
-    # end
-    # values << current_node.val
-    # current_node = roots.pop
-    # values << current_node.val
-    # current_node = roots.pop
-    # current_node = current_node.right_val
-
-    # until current_node.left_val.nil? && current_node.right_val.nil?
-    #   roots << current_node
-    #   current_node = current_node.left_val.nil? ? current_node.right_val : current_node.left_val
-    # end
-    # values << current_node.val
-    # current_node = roots.pop
-    # values << current_node.val
-    # current_node = roots.pop
-    # current_node = current_node.right_val
-
-    # until current_node.left_val.nil? && current_node.right_val.nil?
-    #   roots << current_node
-    #   current_node = current_node.left_val.nil? ? current_node.right_val : current_node.left_val
-    # end
-    # values << current_node.val
-    # current_node = roots.pop
-    # values << current_node.val
-    # current_node = roots.pop
-    # current_node = current_node.right_val
-
-    # until current_node.left_val.nil? && current_node.right_val.nil?
-    #   roots << current_node
-    #   current_node = current_node.left_val.nil? ? current_node.right_val : current_node.left_val
-    # end
-    # values << current_node.val
-    # current_node = roots.pop
-    # values << current_node.val
-
-    # until current_node.left_val.nil?
-    #   roots << current_node.val
-    #   current_node = current_node.left_val
-    # end
-    # p current_node.val
-    # p roots
-    # roots << current_node.val
-    # current_node = current_node.right_val
-    # until current_node.left_val.nil?
-    #   roots << current_node.val
-    #   current_node = current_node.left_val
-    # end
-    # p current_node.val
-    # p roots
-    # until current_node.left_val.nil? && current_node.right_val.nil? && roots.empty?
-    #   if current_node.left_val.nil? && current_node.right_val.nil?
-    #     current_node = roots.pop
-    #     values << current_node.val
-    #     current_node = current_node.right_val
-    #   else
-    #     roots << current_node
-    #     values << current_node.val
-    #     current_node = current_node.left_val.nil? ? current_node.right_val : current_node.left_val
-    #   end
-    # end
-    # values << current_node.val
-    # values
-    # current_node = roots.pop
-
-    # until current_node.nil? && right_nodes.empty?
-
-    #   right_nodes << right_node unless right_node.nil?
-    #   block_given? ? yield(current_node.val) : values << current_node.val
-    #   current_node = current_node.left_val.nil? ? right_nodes.pop : current_node.left_val
-    #   right_node = current_node.right_val unless current_node.nil?
-    # end
-    # block_given? ? nil : values
   end
 
   def height(comparable_node)
