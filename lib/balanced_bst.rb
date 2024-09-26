@@ -153,26 +153,22 @@ class Tree
 
     current_node = @root
     values = []
+    # Arr 1
     no_left_movement_nodes = []
+    # Arr 2
     left_movement_allowed_nodes = []
 
-    no_left_movement_nodes << current_node
-    left_movement_allowed_nodes << current_node.right_val
-    until no_left_movement_nodes.empty? && left_movement_allowed_nodes.nil?
-      if current_node.left_val.nil? && current_node.right_val.nil?
-        p values
-        values << current_node.val
-        # Pop from arr 2
-        current_node = left_movement_allowed_nodes.empty? ? no_left_movement_nodes.pop : left_movement_allowed_nodes.pop
-      else
-        current_node = current_node.left_val
-      end
-      if current_node.nil?
-        current_node = left_movement_allowed_nodes.empty? ? no_left_movement_nodes.pop : left_movement_allowed_nodes.pop
-      else
-        no_left_movement_nodes << current_node
-        left_movement_allowed_nodes << current_node.right_val unless current_node.right_val.nil?
-      end
+    # Step by Step
+    # Var = root (8)
+    until no_left_movement_nodes.empty? && left_movement_allowed_nodes.empty?
+      no_left_movement_nodes << current_node
+      left_movement_allowed_nodes << current_node.right_val unless current_node.right_val.nil?
+      current_node = current_node.left_val
+      next unless current_node.nil?
+
+      # Pop from arr 2
+      current_node = left_movement_allowed_nodes.pop
+      values << current_node.val
     end
   end
 
