@@ -164,4 +164,4 @@ x.pretty_print
 
 y = x.find(8)
 
-p x.preorder
+x.preorder { |e| puts e + 1 }
