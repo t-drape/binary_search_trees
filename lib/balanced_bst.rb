@@ -105,20 +105,14 @@ class Tree
     arr unless block_given?
   end
 
-  def preorder
+  def preorder(node = @root, values = [], &block)
     # Preorder Traversal: Root node, Left node, Right node
-    current_node = @root
-    right_node = @root.right_val
-    right_nodes = []
-    values = []
+    return nil if node.nil?
 
-    until current_node.nil? && right_nodes.empty?
-      right_nodes << right_node unless right_node.nil?
-      block_given? ? yield(current_node.val) : values << current_node.val
-      current_node = current_node.left_val.nil? ? right_nodes.pop : current_node.left_val
-      right_node = current_node.right_val unless current_node.nil?
-    end
-    values unless values.empty?
+    block_given? ? yield(node.val) : values << node.val
+    preorder(node.left_val, values, &block)
+    preorder(node.right_val, values, &block)
+    block_given? ? nil : values
   end
 
   def inorder(node = @root, values = [], &block)
@@ -170,4 +164,4 @@ x.pretty_print
 
 y = x.find(8)
 
-x.inorder { |e| puts e + 1 }
+p x.preorder
