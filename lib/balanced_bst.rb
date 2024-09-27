@@ -147,15 +147,16 @@ class Tree
     values unless values.empty?
   end
 
-  def postorder(node = @root, values = [])
+  def postorder(node = @root, values = [], &block)
     # Postorder Traversal: Left node, Right node, Root node
     # 3, 1, 7, 5, 4, 23, 9, 6345, 324, 67, 8
 
     return nil if node.nil?
 
-    postorder(node.left_val, values)
-    postorder(node.right_val, values)
-    yield(node.val)
+    postorder(node.left_val, values, &block)
+    postorder(node.right_val, values, &block)
+    block_given? ? yield(node.val) : values << node.val
+    return block_given? ? nil : values
 
     # current_node = @root
     # values = []
@@ -240,6 +241,4 @@ x.pretty_print
 
 y = x.find(8)
 
-x.postorder do |e|
-  puts e
-end
+x.postorder { |e| puts e + 1 }
