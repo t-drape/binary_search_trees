@@ -147,63 +147,68 @@ class Tree
     values unless values.empty?
   end
 
-  def postorder
+  def postorder(node = @root, values = [])
     # Postorder Traversal: Left node, Right node, Root node
     # 3, 1, 7, 5, 4, 23, 9, 6345, 324, 67, 8
 
-    current_node = @root
-    values = []
-    # Arr 1
-    no_left_movement_nodes = []
-    # Arr 2
-    left_movement_allowed_nodes = []
+    return nil if node.nil?
 
-    no_left_movement_nodes << current_node
-    left_movement_allowed_nodes << current_node.right_val
-    current_node = current_node.left_val
+    postorder(node.left_val, values)
+    postorder(node.right_val, values)
+    yield(node.val)
 
-    # Step by Step
-    # Var = root (8)
-    until no_left_movement_nodes.empty? && left_movement_allowed_nodes.empty?
-      no_left_movement_nodes << current_node
-      left_movement_allowed_nodes << current_node.right_val unless current_node.right_val.nil?
-      current_node = current_node.left_val
-      next unless current_node.nil?
+    # current_node = @root
+    # values = []
+    # # Arr 1
+    # no_left_movement_nodes = []
+    # # Arr 2
+    # left_movement_allowed_nodes = []
 
-      current_node = left_movement_allowed_nodes.pop
-      next unless current_node.left_val.nil? && current_node.right_val.nil?
+    # no_left_movement_nodes << current_node
+    # left_movement_allowed_nodes << current_node.right_val
+    # current_node = current_node.left_val
 
-      values << current_node.val
-      current_node = no_left_movement_nodes.pop
-      values << current_node.val
-      current_node = left_movement_allowed_nodes.pop
+    # # Step by Step
+    # # Var = root (8)
+    # until no_left_movement_nodes.empty? && left_movement_allowed_nodes.empty?
+    #   no_left_movement_nodes << current_node
+    #   left_movement_allowed_nodes << current_node.right_val unless current_node.right_val.nil?
+    #   current_node = current_node.left_val
+    #   next unless current_node.nil?
 
-      # next unless current_node.nil?
+    #   current_node = left_movement_allowed_nodes.pop
+    #   next unless current_node.left_val.nil? && current_node.right_val.nil?
 
-      # # Pop from arr 2
-      # if left_movement_allowed_nodes.empty?
-      #   no_left_movement_nodes.each do |e|
-      #     values << e.val
-      #   end
-      # else
-      #   current_node = left_movement_allowed_nodes.pop
-      #   next unless current_node.right_val.nil? && current_node.left_val.nil?
+    #   values << current_node.val
+    #   current_node = no_left_movement_nodes.pop
+    #   values << current_node.val
+    #   current_node = left_movement_allowed_nodes.pop
 
-      #   values << current_node.val
-      #   current_node = no_left_movement_nodes.pop
-      #   values << current_node.val
-      #   current_node = left_movement_allowed_nodes.pop
-      #   add_to = false
-      # current_node = left_movement_allowed_nodes.pop
-      # p current_node.val
-      # values << current_node.val
-      # next unless current_node.right_val.nil? && current_node.left_val.nil?
+    # next unless current_node.nil?
 
-      # current_node = no_left_movement_nodes.pop
-      # p current_node.val
-      # values << current_node.val
-      # current_node = current_node.right_val unless current_node.right_val.nil?
-    end
+    # # Pop from arr 2
+    # if left_movement_allowed_nodes.empty?
+    #   no_left_movement_nodes.each do |e|
+    #     values << e.val
+    #   end
+    # else
+    #   current_node = left_movement_allowed_nodes.pop
+    #   next unless current_node.right_val.nil? && current_node.left_val.nil?
+
+    #   values << current_node.val
+    #   current_node = no_left_movement_nodes.pop
+    #   values << current_node.val
+    #   current_node = left_movement_allowed_nodes.pop
+    #   add_to = false
+    # current_node = left_movement_allowed_nodes.pop
+    # p current_node.val
+    # values << current_node.val
+    # next unless current_node.right_val.nil? && current_node.left_val.nil?
+
+    # current_node = no_left_movement_nodes.pop
+    # p current_node.val
+    # values << current_node.val
+    # current_node = current_node.right_val unless current_node.right_val.nil?
     values
   end
 
@@ -235,4 +240,6 @@ x.pretty_print
 
 y = x.find(8)
 
-p x.postorder
+x.postorder do |e|
+  puts e
+end
