@@ -136,8 +136,17 @@ class Tree
     block_given? ? nil : values
   end
 
-  def height(comparable_node)
-    height = 1
+  def height(node)
+    return nil if node.nil?
+
+    height = 0
+    right_values_with_current_height
+
+    until node.right_val.nil? && node.left_val.nil?
+      height += 1
+      node = node.left_val.nil? ? node.right_val : node.left_val
+
+    end
   end
 
   def depth(node)
@@ -151,6 +160,20 @@ class Tree
       return nil if compare_node.nil?
     end
     node_depth
+  end
+
+  def balanced?
+    # The left subtree of every node AND the right subtree of every node
+    node = @root
+    right_nodes = []
+    until node.nil? && right_nodes.empty?
+      node = right_nodes.pop if node.nil?
+      right_nodes << node.right_val unless node.right_val.nil?
+      left_height = height(node.left_val)
+      right_height = height(node.right_val)
+      return false if abs(left_height - right_height) > 1
+    end
+    true
   end
 
   def pretty_print(node = @root, prefix = '', is_left_val = true)
