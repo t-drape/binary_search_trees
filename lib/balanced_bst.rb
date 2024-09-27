@@ -121,36 +121,19 @@ class Tree
     values unless values.empty?
   end
 
-  def inorder
+  def inorder(node = @root, values = [], &block)
     # Inorder Traversal: Left node, Root node, Right node
+    return nil if node.nil?
 
-    current_node = @root
-    roots = []
-    values = []
-    until current_node.right_val.nil? && roots.empty?
-      until current_node.left_val.nil?
-        # Each time, the value updates, keep old values in roots queue
-        roots << current_node
-        # Base case: go left
-        current_node = current_node.left_val
-      end
-      # Now, the current node is the lowest value in BST
-      # Add value to value array
-      block_given? ? yield(current_node.val) : values << current_node.val
-      if current_node.right_val.nil?
-        current_node = roots.pop
-        block_given? ? yield(current_node.val) : values << current_node.val
-      end
-      current_node = current_node.right_val
-    end
-    block_given? ? yield(current_node.val) : values << current_node.val
-    values unless values.empty?
+    inorder(node.left_val, values, &block)
+    block_given? ? yield(node.val) : values << node.val
+    inorder(node.right_val, values, &block)
+    block_given? ? nil : values
   end
 
   def postorder(node = @root, values = [], &block)
     # Postorder Traversal: Left node, Right node, Root node
     # 3, 1, 7, 5, 4, 23, 9, 6345, 324, 67, 8
-
     return nil if node.nil?
 
     postorder(node.left_val, values, &block)
@@ -187,4 +170,4 @@ x.pretty_print
 
 y = x.find(8)
 
-p x.postorder
+x.inorder { |e| puts e + 1 }
