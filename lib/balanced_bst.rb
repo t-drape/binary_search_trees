@@ -141,7 +141,9 @@ class Tree
   end
 
   def depth(node)
-    node_depth = 1
+    return nil if node.nil?
+
+    node_depth = 0
     compare_node = @root
     while node != compare_node
       node_depth += 1
@@ -162,4 +164,6 @@ x = Tree.new([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324])
 
 x.pretty_print
 
-x.preorder { |e| puts e + 1 }
+y = x.find(8)
+
+p x.depth(y)
