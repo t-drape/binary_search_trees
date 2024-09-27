@@ -162,6 +162,4 @@ x = Tree.new([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324])
 
 x.pretty_print
 
-y = x.find(8)
-
 x.preorder { |e| puts e + 1 }
