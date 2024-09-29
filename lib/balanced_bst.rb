@@ -198,3 +198,5 @@ x.pretty_print
 y = x.find(67)
 
 p x.rebalance
+x.pretty_print
+p x.balanced?
