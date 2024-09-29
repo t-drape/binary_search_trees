@@ -165,9 +165,11 @@ class Tree
     until node.nil? && right_nodes.empty?
       node = right_nodes.pop if node.nil?
       right_nodes << node.right_val unless node.right_val.nil?
-      left_height = height(node.left_val)
-      right_height = height(node.right_val)
-      return false if abs(left_height - right_height) > 1
+      left_height = node.left_val.nil? ? 0 : height(node.left_val)
+      right_height = node.right_val.nil? ? 0 : height(node.right_val)
+      return false if (left_height - right_height).abs > 1
+
+      node = node.left_val
     end
     true
   end
@@ -185,4 +187,4 @@ x.pretty_print
 
 y = x.find(67)
 
-p x.height(y)
+p x.balanced?
