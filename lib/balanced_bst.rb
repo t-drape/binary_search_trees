@@ -183,6 +183,10 @@ end
 
 x = Tree.new([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324])
 
+x.insert(6)
+x.insert(0)
+x.insert(-1)
+x.insert(-2)
 x.pretty_print
 
 y = x.find(67)
