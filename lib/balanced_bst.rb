@@ -69,7 +69,15 @@ class Tree
   end
 
   def delete(value, node = @root)
-    puts value
+    until node.val == value
+      comp_node = node
+      node = value < node.val ? node.left_val : node.right_val
+    end
+    if node.val < comp_node.val
+      comp_node.left_val = node.left_val
+    else
+      comp_node.right_val = node.right_val
+    end
   end
 
   def find(value, node = @root)
@@ -160,6 +168,11 @@ class Tree
 
   def balanced?
     # The left subtree of every node AND the right subtree of every node
+    # return nil if node.nil?
+    # block_given? ? yield(node.val) : values << node.val
+    # preorder(node.left_val, values, &block)
+    # preorder(node.right_val, values, &block)
+    # block_given? ? nil : values
     node = @root
     right_nodes = []
     until node.nil? && right_nodes.empty?
@@ -180,9 +193,17 @@ class Tree
     @root = build_tree(array)
   end
 
+  # To get a stylistic format of the binary search tree, uncomment the next function! Provided by TOP :)
+
   def pretty_print(node = @root, prefix = '', is_left_val = true)
     pretty_print(node.right_val, "#{prefix}#{is_left_val ? '│   ' : '    '}", false) if node.right_val
     puts "#{prefix}#{is_left_val ? '└── ' : '┌── '}#{node.value}"
     pretty_print(node.left_val, "#{prefix}#{is_left_val ? '    ' : '│   '}", true) if node.left_val
   end
 end
+tree = Tree.new([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324])
+tree.pretty_print
+p tree
+tree.delete(4)
+tree.pretty_print
+p tree
