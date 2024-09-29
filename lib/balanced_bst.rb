@@ -174,6 +174,12 @@ class Tree
     true
   end
 
+  def rebalance
+    array = []
+    inorder { |e| array << e }
+    @root = build_tree(array)
+  end
+
   def pretty_print(node = @root, prefix = '', is_left_val = true)
     pretty_print(node.right_val, "#{prefix}#{is_left_val ? '│   ' : '    '}", false) if node.right_val
     puts "#{prefix}#{is_left_val ? '└── ' : '┌── '}#{node.value}"
@@ -191,4 +197,4 @@ x.pretty_print
 
 y = x.find(67)
 
-p x.balanced?
+p x.rebalance
