@@ -136,17 +136,13 @@ class Tree
     block_given? ? nil : values
   end
 
-  def height(node)
-    return nil if node.nil?
+  def height(node, height_total = 0)
+    return height_total if node.left_val.nil? && node.right_val.nil?
 
-    height = 0
-    right_values_with_current_height
+    height_left = node.left_val.nil? ? 0 : height(node.left_val, height_total + 1)
+    height_right = node.right_val.nil? ? 0 : height(node.right_val, height_total + 1)
 
-    until node.right_val.nil? && node.left_val.nil?
-      height += 1
-      node = node.left_val.nil? ? node.right_val : node.left_val
-
-    end
+    height_left > height_right ? height_left : height_right
   end
 
   def depth(node)
@@ -187,6 +183,6 @@ x = Tree.new([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324])
 
 x.pretty_print
 
-y = x.find(8)
+y = x.find(67)
 
-p x.depth(y)
+p x.height(y)
