@@ -91,10 +91,13 @@ class Tree
       end
       deletion_node.val = node.val
       lowest_parent_node.left_val = nil
-    else
-      # One child case
-      # If greater than parent node, set right child of parent equal to right child of delete node
+    # One child case
+    elsif node.val < parent_node.val
       # If less than parent node, set left child of parent equal to left child of delete node
+      parent_node.left_val = node.left_val.nil? ? node.right_val : node.left_val
+    else
+      # If greater than parent node, set right child of parent equal to right child of delete node
+      parent_node.right_val = node.right_val.nil? ? node.left_val : node.right_val
     end
   end
 
@@ -221,5 +224,5 @@ class Tree
 end
 tree = Tree.new([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324])
 tree.pretty_print
-p tree.delete(8)
+tree.delete(1)
 tree.pretty_print
