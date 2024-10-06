@@ -76,15 +76,21 @@ class Tree
     end
   end
 
-  def both_child_deletion(node)
+  def both_child_deletion(node, parent_node)
     deletion_node = node
+    # Lowest child in the right subtree
     node = node.right_val
-    until node.left_val.nil?
-      lowest_parent_node = node
-      node = node.left_val
+    if node.left_val.nil?
+      deletion_node.val = node.val
+      deletion_node.right_val = node.right_val
+    else
+      until node.left_val.nil?
+        lowest_parent_node = node
+        node = node.left_val
+      end
+      deletion_node.val = node.val
+      lowest_parent_node.left_val = node.right_val
     end
-    deletion_node.val = node.val
-    lowest_parent_node.left_val = node.right_val
   end
 
   def one_child_deletion(node, parent_node)
@@ -97,19 +103,30 @@ class Tree
     end
   end
 
-  def delete(value, node = @root)
+  def to_value_node(value)
+    node = @root
     until node.val == value
       parent_node = node
       node = value < node.val ? node.left_val : node.right_val
+      return nil if node.nil?
+    end
+    [node, parent_node]
+  end
+
+  def delete(value)
+    node = @root
+    until node.val == value
+      parent_node = node
+      node = value < node.val ? node.left_val : node.right_val
+      return nil if node.nil?
     end
     # Leaf node deletion
     # Left child nil and right child nil
     if node.left_val.nil? && node.right_val.nil?
       leaf_node_deletion(node, parent_node)
     # Left child not nil, Right child not nil
-    # Lowest child in the right subtree
     elsif !node.left_val.nil? && !node.right_val.nil?
-      both_child_deletion(node)
+      both_child_deletion(node, parent_node)
     # One child case
     else
       one_child_deletion(node, parent_node)
@@ -239,7 +256,7 @@ class Tree
 end
 tree = Tree.new([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324])
 tree.pretty_print
-tree.delete(324)
+tree.delete(8)
 tree.pretty_print
 # tree.delete(9)
 # tree.pretty_print
