@@ -70,13 +70,31 @@ class Tree
 
   def delete(value, node = @root)
     until node.val == value
-      comp_node = node
+      parent_node = node
       node = value < node.val ? node.left_val : node.right_val
     end
-    if node.val < comp_node.val
-      comp_node.left_val = node.left_val
+    # Leaf node deletion
+    # Left child nil and right child nil
+    if node.left_val.nil? && node.right_val.nil?
+
+      if node.val < parent_node.val
+        parent_node.left_val = nil
+      else
+        parent_node.right_val = nil
+      end
+    # Left child not nil, Right child not nil
+    elsif !node.left_val.nil? && !node.right_val.nil?
+      deletion_node = node
+      until node.left_val.nil?
+        lowest_parent_node = node
+        node = node.left_val
+      end
+      deletion_node.val = node.val
+      lowest_parent_node.left_val = nil
     else
-      comp_node.right_val = node.right_val
+      # One child case
+      # If greater than parent node, set right child of parent equal to right child of delete node
+      # If less than parent node, set left child of parent equal to left child of delete node
     end
   end
 
@@ -203,7 +221,5 @@ class Tree
 end
 tree = Tree.new([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324])
 tree.pretty_print
-p tree
-tree.delete(4)
+p tree.delete(8)
 tree.pretty_print
-p tree
