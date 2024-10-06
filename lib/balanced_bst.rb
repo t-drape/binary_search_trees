@@ -57,13 +57,13 @@ class Tree
 
   def insert(value, node = @root)
     # Check if value in BST, return nil if present
-    return nil if value == node.value
+    return nil if value == node.val
 
     # For value less than node value, use left half of array
-    if value < node.value
+    if value < node.val
       left_case(value, node)
     # For value greater than node value, use right half of array
-    elsif value > node.value
+    elsif value > node.val
       right_case(value, node)
     end
   end
@@ -131,11 +131,11 @@ class Tree
   def find(value, node = @root)
     return nil if node.nil?
 
-    return node if value == node.value
+    return node if value == node.val
 
-    if value < node.value
+    if value < node.val
       find(value, node.left_val)
-    elsif value > node.value
+    elsif value > node.val
       find(value, node.right_val)
     end
   end
@@ -155,7 +155,7 @@ class Tree
       if block_given?
         yield(current_node)
       else
-        arr << current_node.value
+        arr << current_node.val
       end
     end
     arr unless block_given?
@@ -208,7 +208,7 @@ class Tree
     compare_node = @root
     while node != compare_node
       node_depth += 1
-      compare_node = node.value > compare_node.value ? compare_node.right_val : compare_node.left_val
+      compare_node = node.val > compare_node.val ? compare_node.right_val : compare_node.left_val
       return nil if compare_node.nil?
     end
     node_depth
@@ -244,7 +244,7 @@ class Tree
   # To get a stylistic format of the binary search tree, uncomment the next function! Provided by TOP :)
   # def pretty_print(node = @root, prefix = '', is_left_val = true)
   #   pretty_print(node.right_val, "#{prefix}#{is_left_val ? '│   ' : '    '}", false) if node.right_val
-  #   puts "#{prefix}#{is_left_val ? '└── ' : '┌── '}#{node.value}"
+  #   puts "#{prefix}#{is_left_val ? '└── ' : '┌── '}#{node.val}"
   #   pretty_print(node.left_val, "#{prefix}#{is_left_val ? '    ' : '│   '}", true) if node.left_val
   # end
 end

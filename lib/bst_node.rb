@@ -11,8 +11,4 @@ class BstNode
     @left_val = left_val
     @right_val = right_val
   end
-
-  def value
-    @val
-  end
 end
