@@ -242,18 +242,9 @@ class Tree
   end
 
   # To get a stylistic format of the binary search tree, uncomment the next function! Provided by TOP :)
-
-  def pretty_print(node = @root, prefix = '', is_left_val = true)
-    pretty_print(node.right_val, "#{prefix}#{is_left_val ? '│   ' : '    '}", false) if node.right_val
-    puts "#{prefix}#{is_left_val ? '└── ' : '┌── '}#{node.value}"
-    pretty_print(node.left_val, "#{prefix}#{is_left_val ? '    ' : '│   '}", true) if node.left_val
-  end
+  # def pretty_print(node = @root, prefix = '', is_left_val = true)
+  #   pretty_print(node.right_val, "#{prefix}#{is_left_val ? '│   ' : '    '}", false) if node.right_val
+  #   puts "#{prefix}#{is_left_val ? '└── ' : '┌── '}#{node.value}"
+  #   pretty_print(node.left_val, "#{prefix}#{is_left_val ? '    ' : '│   '}", true) if node.left_val
+  # end
 end
-tree = Tree.new([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324])
-tree.pretty_print
-tree.insert(0)
-tree.pretty_print
-tree.delete(1)
-tree.pretty_print
-# tree.delete(9)
-# tree.pretty_print
